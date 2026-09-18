@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lorem</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-snap-type: y mandatory; 
+      overflow-y: scroll;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 70px;
+      background-color: transparent;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 50px;
+      z-index: 1000;
+    }
+
+    .logo {
+      color: #0f172a; 
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 30px;
+    }
+
+    .nav-links a {
+      color: #334155; 
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #0000ee; 
+    }
+
+    section {
+      position: relative; 
+      height: 100vh; 
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 20px;
+      scroll-snap-align: start; 
+      scroll-snap-stop: always; 
+    }
+
+    section h1 {
+      position: absolute; 
+      top: 100px; 
+      left: 50px; 
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: #0f172a; 
+    }
+
+    section p {
+      font-size: 1.25rem;
+      font-weight: 400; 
+      max-width: 600px;
+      color: #1e293b; 
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    #hero {
+      background-color: #f8fafc;
+      background-image: linear-gradient(#cbd5e1 1px, transparent 1px), linear-gradient(90deg, #cbd5e1 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+
+    #hero h1 {
+      position: static; 
+      font-size: 4.5rem;
+      margin-bottom: 10px;
+    }
+    
+    #hero p {
+      font-size: 1.5rem;
+      max-width: 700px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 30px;
+      background-color: #0000ee; 
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: bold;
+      border: 3px solid #0f172a;
+      box-shadow: 6px 6px 0px #0f172a; 
+      transition: all 0.2s ease;
+      font-size: 1.2rem;
+      margin-top: 20px;
+    }
+
+    .btn:hover {
+      background-color: #0000aa;
+      transform: translate(3px, 3px);
+      box-shadow: 3px 3px 0px #0f172a;
+    }
+ 
+    #a { background: linear-gradient(135deg, #e5e7eb, #d1d5db); }
+    #b { background: linear-gradient(135deg, #5eead4, #2dd4bf); }
+    #c { background: linear-gradient(135deg, #fef3c7, #fde68a); }
+    #d { background: linear-gradient(135deg, #bfdbfe, #93c5fd); }
+
+    footer {
+      height: 100vh;
+      width: 100%;
+      background: #0f172a; 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #22c55e; 
+      font-weight: 600;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .nav-links { gap: 15px; }
+
+      #hero h1 { font-size: 2.8rem; }
+      #hero p { font-size: 1.1rem; }
+
+      section h1 {
+        font-size: 2.2rem;
+        left: 20px; 
+        top: 90px;
+      }
+      section p { font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">LOREM</div>
+    <ul class="nav-links">
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#a">A</a></li>
+      <li><a href="#b">B</a></li>
+      <li><a href="#c">C</a></li>
+      <li><a href="#d">D</a></li>
+    </ul>
+  </nav>
+
+  <section id="hero">
+    <h1>LOREM IPSUM</h1>
+    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
+    <a href="#a" class="btn">Lorem</a>
+  </section>
+
+  <section id="a">
+    <h1>A</h1>
+    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Provident consequatur quos, aliquam iusto architecto voluptate temporibus neque error vero quia!</p>
+  </section>
+
+  <section id="b">
+    <h1>B</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque dolor commodi minima voluptas consequatur error alias ratione cum blanditiis sunt.</p>
+  </section>
+
+  <section id="c">
+    <h1>C</h1>
+    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Debitis eius similique beatae cumque magni. Impedit iure ratione autem consequatur excepturi?</p>
+  </section>
+
+  <section id="d">
+    <h1>D</h1>
+    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Placeat tempore consequuntur voluptatem eius! Illo nostrum voluptates eligendi quo exercitationem! Illo.</p>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 Lorem Ipsum</p>
+  </footer>
+</body>
+</html>
