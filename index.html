@@ -125,11 +125,11 @@
       transform: translate(3px, 3px);
       box-shadow: 3px 3px 0px #0f172a;
     }
- 
-    #a { background: linear-gradient(135deg, #e5e7eb, #d1d5db); }
-    #b { background: linear-gradient(135deg, #5eead4, #2dd4bf); }
-    #c { background: linear-gradient(135deg, #fef3c7, #fde68a); }
-    #d { background: linear-gradient(135deg, #bfdbfe, #93c5fd); }
+
+    #a { background: linear-gradient(135deg, #eceaea, #afb3b9);}
+    #b { background: linear-gradient(135deg, #e0f2fe, #ccfbf1); }
+    #c { background: linear-gradient(135deg, #e0e7ff, #dbeafe); }
+    #d { background: linear-gradient(135deg, #f5f3ff, #f1f5f9); }
 
     footer {
       height: 100vh;
@@ -158,11 +158,85 @@
       }
       section p { font-size: 1rem; }
     }
+
+
+  /* Section 1 - 4 */
+  .timeline-section {
+    justify-content: flex-start !important; 
+    padding-top: 100px !important; 
+    align-items: center !important; 
+  }
+
+  .timeline-section h1 {
+    display: none;
+  }
+
+  .timeline-title {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .timeline-title h2 {
+    font-size: 2rem; 
+    color: #0f172a;
+    margin-bottom: 5px;
+  }
+
+  #era-year {
+    font-size: 1rem !important;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin: 0 !important;
+    color: #1e293b;
+    max-width: none !important;
+    display: block;
+  }
+
+  .timeline-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    max-width: 800px; 
+    width: 100%;
+  }
+
+  .timeline-card {
+    border: 1px solid #cbd5e1;
+    background-color: #ffffff;
+    padding: 15px 20px; 
+    text-align: left;
+    border-radius: 4px;
+    box-shadow: 6px 6px 0px rgba(17, 27, 50, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease
+  }
+
+  .timeline-card .year {
+    display: block; 
+    font-weight: bold;
+    font-size: 0.85rem;
+    color: #475569;
+    margin-bottom: 5px;
+  }
+
+  .timeline-card h3 {
+    font-size: 1.1rem;
+    color: #0f172a;
+    margin-bottom: 8px;
+  }
+
+  .timeline-card p {
+    font-size: 0.85rem !important; 
+    line-height: 1.4 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    text-align: left !important;
+  }
+
   </style>
 </head>
 <body>
   <nav>
-    <div class="logo">LOREM</div>
+    <div class="logo">VA</div>
     <ul class="nav-links">
       <li><a href="#hero">Home</a></li>
       <li><a href="#a">A</a></li>
@@ -173,31 +247,142 @@
   </nav>
 
   <section id="hero">
-    <h1>LOREM IPSUM</h1>
-    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
-    <a href="#a" class="btn">Lorem</a>
+    <h1>Virtual Archive</h1>
+    <p>Menelusuri perjalanan dari protokol jaringan awal hingga era kecerdasan buatan modern.</p>
+    <a href="#a" class="btn">Telusuri</a>
   </section>
 
-  <section id="a">
-    <h1>A</h1>
-    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Provident consequatur quos, aliquam iusto architecto voluptate temporibus neque error vero quia!</p>
+  <section id="a" class="timeline-section">
+    <div class="timeline-title">
+      <h2>Network Foundations and Early Protocols</h2>
+      <p id="era-year">1960S - 1980S</p>
+    </div>
+    
+    <div class="timeline-grid">
+      <div class="timeline-card">
+        <span class="year">1969</span>
+        <h3>Pembentukan ARPANET</h3>
+        <p>ARPANET (Advanced Research Projects Agency Network) dibentuk oleh Departemen Pertahanan AS (DARPA). Pesan pertama dikirim dari UCLA ke Stanford Research Institute, meskipun sistem crash setelah mengetik dua huruf pertama ("LO").</p>
+      </div>
+      
+      <div class="timeline-card">
+        <span class="year">1971</span>
+        <h3>Penemuan Email Jaringan</h3>
+        <p>Ray Tomlinson menciptakan sistem email jaringan pertama dan menggunakan simbol @ untuk memisahkan nama pengguna dari nama komputer.</p>
+      </div>
+      
+      <div class="timeline-card">
+        <span class="year">1973 - 1974</span>
+        <h3>Pengembangan TCP/IP</h3>
+        <p>Vinton Cerf dan Bob Kahn merancang Transmission Control Protocol / Internet Protocol (TCP/IP), standar yang memungkinkan berbagai jaringan komputer yang berbeda untuk saling berkomunikasi.</p>
+      </div>
+      
+      <div class="timeline-card">
+        <span class="year">1983</span>
+        <h3>Adopsi TCP/IP & Standarisasi DNS</h3>
+        <p>ARPANET secara resmi mengadopsi protokol TCP/IP. Tanggal ini sering dianggap sebagai "hari lahir" internet modern. Pada tahun yang sama, Domain Name System (DNS) diperkenalkan.</p>
+      </div>
+    </div>
   </section>
 
-  <section id="b">
-    <h1>B</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque dolor commodi minima voluptas consequatur error alias ratione cum blanditiis sunt.</p>
+  <section id="b" class="timeline-section">
+    <div class="timeline-title">
+      <h2>The Birth of the Web and Commercialization</h2>
+      <p id="era-year">1990S</p>
+    </div>
+    
+    <div class="timeline-grid">
+      <div class="timeline-card">
+        <span class="year">1989 - 1991</span>
+        <h3>Penemuan World Wide Web</h3>
+        <p>Tim Berners-Lee di CERN (Organisasi Eropa untuk Riset Nuklir) menemukan World Wide Web (WWW). Ia juga menciptakan bahasa markah HTML, protokol HTTP, dan URL.</p>
+      </div>
+      
+      <div class="timeline-card">
+        <span class="year">1993</span>
+        <h3>Peluncuran Mosaic</h3>
+        <p>Marc Andreessen memimpin tim yang menciptakan Mosaic, peramban web (browser) berbasis antarmuka grafis (GUI) pertama yang populer, membuat web dapat diakses oleh kalangan non-teknis.</p>
+      </div>
+      
+      <div class="timeline-card">
+        <span class="year">1995</span>
+        <h3>Komersialisasi & Internet Explorer</h3>
+        <p>Pembatasan komersial atas internet dicabut. Perusahaan seperti Amazon dan eBay didirikan. Microsoft meluncurkan Internet Explorer.</p>
+      </div>
+      
+      <div class="timeline-card">
+        <span class="year">1997 - 2001</span>
+        <h3>Era Dot-com Bubble</h3>
+        <p>Terjadi lonjakan investasi massal pada perusahaan-perusahaan internet baru, yang sebagian besar berakhir dengan kebangkrutan saat gelembung pasar pecah.</p>
+      </div>
+    </div>
   </section>
 
-  <section id="c">
-    <h1>C</h1>
-    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Debitis eius similique beatae cumque magni. Impedit iure ratione autem consequatur excepturi?</p>
+  <section id="c" class="timeline-section">
+    <div class="timeline-title">
+      <h2>Web 2.0 and the Mobile Revolution</h2>
+      <p id="era-year">2000S</p>
+    </div>
+    
+    <div class="timeline-grid">
+      <div class="timeline-card">
+        <span class="year">2004</span>
+        <h3>Dominasi Media Sosial</h3>
+        <p>Facebook didirikan, menandai awal dari dominasi media sosial modern yang mengubah cara manusia berinteraksi secara online.</p>
+      </div>
+      
+      <div class="timeline-card">
+        <span class="year">2005</span>
+        <h3>Revolusi Video Online</h3>
+        <p>YouTube diluncurkan, mengubah standar distribusi dan konsumsi video di internet.</p>
+      </div>
+      
+      <div class="timeline-card">
+        <span class="year">2006</span>
+        <h3>Komersialisasi Cloud Computing</h3>
+        <p>Amazon Web Services (AWS) meluncurkan layanan komputasi awan (cloud computing) komersial, memungkinkan perusahaan rintisan membangun aplikasi tanpa perlu membeli server fisik.</p>
+      </div>
+      
+      <div class="timeline-card">
+        <span class="year">2007</span>
+        <h3>Transisi Mobile Internet</h3>
+        <p>Apple merilis iPhone. Peristiwa ini memicu transisi masif lalu lintas internet dari komputer desktop ke perangkat seluler (mobile internet).</p>
+      </div>
+    </div>
   </section>
 
-  <section id="d">
-    <h1>D</h1>
-    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Placeat tempore consequuntur voluptatem eius! Illo nostrum voluptates eligendi quo exercitationem! Illo.</p>
+  <section id="d" class="timeline-section">
+    <div class="timeline-title">
+      <h2>The Era of Data, Decentralization, and AI</h2>
+      <p id="era-year">2010S - 2026</p>
+    </div>
+    
+    <div class="timeline-grid">
+      <div class="timeline-card">
+        <span class="year">2012</span>
+        <h3>Peluncuran Global IPv6</h3>
+        <p>Peluncuran resmi IPv6 secara global untuk mengatasi masalah penipisan alamat IPv4, memungkinkan miliaran perangkat baru (IoT) terhubung ke internet.</p>
+      </div>
+      
+      <div class="timeline-card">
+        <span class="year">2013 - 2018</span>
+        <h3>Kesadaran Privasi Data</h3>
+        <p>Era kesadaran privasi dan keamanan. Edward Snowden membocorkan pengawasan massal NSA (2013). Skandal Cambridge Analytica (2018) memicu perdebatan global mengenai eksploitasi data pengguna oleh platform web.</p>
+      </div>
+      
+      <div class="timeline-card">
+        <span class="year">2020 - 2021</span>
+        <h3>Akselerasi Digital Pandemi</h3>
+        <p>Pandemi COVID-19 memaksa percepatan transformasi digital. Pekerjaan jarak jauh, layanan streaming, dan infrastruktur cloud mengalami lonjakan adopsi tertinggi dalam sejarah.</p>
+      </div>
+      
+      <div class="timeline-card">
+        <span class="year">2022 - Sekarang</span>
+        <h3>Era Generative AI</h3>
+        <p>Akselerasi kecerdasan buatan generatif (seperti ChatGPT) yang terintegrasi langsung dengan mesin pencari dan infrastruktur web, mengubah cara manusia mencari informasi dan memproduksi konten digital.</p>
+      </div>
+    </div>
   </section>
-
   <footer>
     <p>&copy; 2026 Lorem Ipsum</p>
   </footer>
