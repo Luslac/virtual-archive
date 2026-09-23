@@ -1,0 +1,81 @@
+#a {
+  background-color: #d1d4d9;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+#b {
+  background-color: #aaafb6;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+#c {
+  background-color: #838893;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+#d {
+  background-color: #5c6270;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+#sandbox-section {
+  background-color: #334155;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+.ornament-filter {
+  filter: brightness(0) invert(96%) sepia(4%) saturate(301%) hue-rotate(185deg)
+    brightness(103%) contrast(92%);
+}
+
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.fade-down {
+  opacity: 0;
+  transform: translateY(-30px);
+  transition:
+    opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.animate-show {
+  opacity: 1 !important;
+  transform: translate(0, 0) !important;
+}
+
+.timeline-card:nth-child(1) {
+  transition-delay: 0.1s;
+}
+
+.timeline-card:nth-child(2) {
+  transition-delay: 0.2s;
+}
+
+.timeline-card:nth-child(3) {
+  transition-delay: 0.3s;
+}
+
+.timeline-card:nth-child(4) {
+  transition-delay: 0.4s;
+}

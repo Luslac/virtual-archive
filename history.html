@@ -1,0 +1,615 @@
+<!doctype html>
+<html
+  lang="id"
+  class="scroll-smooth snap-none md:snap-y md:snap-mandatory overflow-x-hidden"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Virtual Archive</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              mono: ['"IBM Plex Mono"', "monospace"],
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="style/history.css" />
+  </head>
+  <body class="font-mono m-0 p-0 box-border text-slate-900">
+    <audio id="bg-music" loop>
+      <source src="asset/music/music.mp3" type="audio/mpeg" />
+      Browser Anda tidak mendukung elemen audio.
+    </audio>
+
+    <nav
+      id="navbar"
+      class="fixed top-0 left-0 w-full h-[70px] bg-transparent flex justify-between items-center px-5 md:px-[50px] z-[1000] transition-colors duration-400 ease-in-out"
+    >
+      <div
+        class="logo text-slate-900 text-2xl font-bold tracking-[1px] transition-colors duration-400 ease-in-out"
+      >
+        VA
+      </div>
+      <div class="nav-right flex items-center gap-[15px] md:gap-[30px]">
+        <ul class="nav-links flex list-none gap-[15px] md:gap-[30px]">
+          <li>
+            <a
+              href="index.html"
+              class="text-slate-900 no-underline font-semibold transition-colors duration-300 hover:text-sky-400"
+              >Home</a
+            >
+          </li>
+          <li>
+            <a
+              href="history.html"
+              class="text-slate-900 no-underline font-semibold transition-colors duration-300 hover:text-sky-400"
+              >History</a
+            >
+          </li>
+          <li>
+            <a
+              href="halaman3.html"
+              class="text-slate-900 no-underline font-semibold transition-colors duration-300 hover:text-sky-400"
+              >Lainnya</a
+            >
+          </li>
+        </ul>
+        <button
+          id="musicToggleBtn"
+          class="music-btn bg-transparent border-2 border-current rounded-full w-9 h-9 flex justify-center items-center cursor-pointer text-slate-900 transition-all duration-300 outline-none hover:bg-sky-400/20 hover:text-sky-400"
+          title="Putar/Hentikan Musik"
+        >
+          <svg id="playIcon" viewBox="0 0 24 24" class="w-4 h-4 fill-current">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+          <svg
+            id="pauseIcon"
+            viewBox="0 0 24 24"
+            class="w-4 h-4 fill-current"
+            style="display: none"
+          >
+            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <section
+      id="a"
+      data-theme="light"
+      class="relative w-full flex flex-col justify-center items-center text-center px-[15px] md:px-5 pt-[90px] pb-[60px] md:h-screen md:pt-[60px] md:pb-10 md:snap-start md:snap-always md:overflow-hidden z-[1]"
+    >
+      <h1 class="hidden"></h1>
+      <div
+        class="timeline-title fade-down text-center mb-5 relative z-10 md:mt-auto"
+      >
+        <h2
+          class="text-[1.35rem] md:text-[1.75rem] text-slate-900 mb-1 font-bold"
+        >
+          Network Foundations and Early Protocols
+        </h2>
+        <p
+          class="era-year text-[0.9rem] font-bold tracking-[2px] m-0 text-slate-600 bg-white/80 inline-block py-[3px] px-3 rounded-full border border-slate-300"
+        >
+          1960s - 1980s
+        </p>
+      </div>
+
+      <div
+        class="timeline-grid grid grid-cols-1 md:grid-cols-2 gap-[10px] md:gap-[15px] max-w-[800px] w-full relative z-10 md:mb-auto"
+      >
+        <div
+          class="timeline-card fade-up border border-slate-200 bg-white px-5 py-4 text-left rounded-[10px] shadow-sm transition-all duration-600 ease-in-out relative hover:shadow-md"
+        >
+          <span
+            class="year inline-block font-bold text-[0.8rem] text-slate-900 bg-slate-100 py-0.5 px-1.5 rounded mb-1.5 border border-slate-200"
+            >1969</span
+          >
+          <h3 class="text-[1.05rem] text-slate-900 mb-1.5 font-bold">
+            Pembentukan ARPANET
+          </h3>
+          <p
+            class="text-[0.82rem] leading-relaxed m-0 text-justify text-slate-700"
+          >
+            ARPANET (Advanced Research Projects Agency Network) dibentuk oleh
+            Departemen Pertahanan AS (DARPA). Pesan pertama dikirim dari UCLA ke
+            Stanford Research Institute, meskipun sistem crash setelah mengetik
+            dua huruf pertama ("LO").
+          </p>
+        </div>
+        <div
+          class="timeline-card fade-up border border-slate-200 bg-white px-5 py-4 text-left rounded-[10px] shadow-sm transition-all duration-600 ease-in-out relative hover:shadow-md"
+        >
+          <span
+            class="year inline-block font-bold text-[0.8rem] text-slate-900 bg-slate-100 py-0.5 px-1.5 rounded mb-1.5 border border-slate-200"
+            >1971</span
+          >
+          <h3 class="text-[1.05rem] text-slate-900 mb-1.5 font-bold">
+            Penemuan Email Jaringan
+          </h3>
+          <p
+            class="text-[0.82rem] leading-relaxed m-0 text-justify text-slate-700"
+          >
+            Ray Tomlinson menciptakan sistem email jaringan pertama dan
+            menggunakan simbol @ untuk memisahkan nama pengguna dari nama
+            komputer.
+          </p>
+        </div>
+        <div
+          class="timeline-card fade-up border border-slate-200 bg-white px-5 py-4 text-left rounded-[10px] shadow-sm transition-all duration-600 ease-in-out relative hover:shadow-md"
+        >
+          <span
+            class="year inline-block font-bold text-[0.8rem] text-slate-900 bg-slate-100 py-0.5 px-1.5 rounded mb-1.5 border border-slate-200"
+            >1973 - 1974</span
+          >
+          <h3 class="text-[1.05rem] text-slate-900 mb-1.5 font-bold">
+            Pengembangan TCP/IP
+          </h3>
+          <p
+            class="text-[0.82rem] leading-relaxed m-0 text-justify text-slate-700"
+          >
+            Vinton Cerf dan Bob Kahn merancang Transmission Control Protocol /
+            Internet Protocol (TCP/IP), standar yang memungkinkan berbagai
+            jaringan komputer yang berbeda untuk saling berkomunikasi.
+          </p>
+        </div>
+        <div
+          class="timeline-card fade-up border border-slate-200 bg-white px-5 py-4 text-left rounded-[10px] shadow-sm transition-all duration-600 ease-in-out relative hover:shadow-md"
+        >
+          <span
+            class="year inline-block font-bold text-[0.8rem] text-slate-900 bg-slate-100 py-0.5 px-1.5 rounded mb-1.5 border border-slate-200"
+            >1983</span
+          >
+          <h3 class="text-[1.05rem] text-slate-900 mb-1.5 font-bold">
+            Standarisasi DNS
+          </h3>
+          <p
+            class="text-[0.82rem] leading-relaxed m-0 text-justify text-slate-700"
+          >
+            ARPANET secara resmi mengadopsi protokol TCP/IP. Tanggal ini sering
+            dianggap sebagai "hari lahir" internet modern. Pada tahun yang sama,
+            Domain Name System (DNS) diperkenalkan.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="b"
+      data-theme="light"
+      class="relative w-full flex flex-col justify-center items-center text-center px-[15px] md:px-5 pt-[90px] pb-[60px] md:h-screen md:pt-[60px] md:pb-10 md:snap-start md:snap-always md:overflow-hidden z-[1]"
+    >
+      <h1 class="hidden"></h1>
+      <div
+        class="timeline-title fade-down text-center mb-5 relative z-10 md:mt-auto"
+      >
+        <h2
+          class="text-[1.35rem] md:text-[1.75rem] text-slate-900 mb-1 font-bold"
+        >
+          The Birth of the Web and Commercialization
+        </h2>
+        <p
+          class="era-year text-[0.9rem] font-bold tracking-[2px] m-0 text-slate-600 bg-white/80 inline-block py-[3px] px-3 rounded-full border border-slate-300"
+        >
+          1990s
+        </p>
+      </div>
+
+      <div
+        class="timeline-grid grid grid-cols-1 md:grid-cols-2 gap-[10px] md:gap-[15px] max-w-[800px] w-full relative z-10 md:mb-auto"
+      >
+        <div
+          class="timeline-card fade-up border border-slate-200 bg-white px-5 py-4 text-left rounded-[10px] shadow-sm transition-all duration-600 ease-in-out relative hover:shadow-md"
+        >
+          <span
+            class="year inline-block font-bold text-[0.8rem] text-slate-900 bg-slate-100 py-0.5 px-1.5 rounded mb-1.5 border border-slate-200"
+            >1989 - 1991</span
+          >
+          <h3 class="text-[1.05rem] text-slate-900 mb-1.5 font-bold">
+            World Wide Web
+          </h3>
+          <p
+            class="text-[0.82rem] leading-relaxed m-0 text-justify text-slate-700"
+          >
+            Tim Berners-Lee di CERN (Organisasi Eropa untuk Riset Nuklir)
+            menemukan World Wide Web (WWW). Ia juga menciptakan bahasa markup
+            HTML, protokol HTTP, dan URL.
+          </p>
+        </div>
+        <div
+          class="timeline-card fade-up border border-slate-200 bg-white px-5 py-4 text-left rounded-[10px] shadow-sm transition-all duration-600 ease-in-out relative hover:shadow-md"
+        >
+          <span
+            class="year inline-block font-bold text-[0.8rem] text-slate-900 bg-slate-100 py-0.5 px-1.5 rounded mb-1.5 border border-slate-200"
+            >1993</span
+          >
+          <h3 class="text-[1.05rem] text-slate-900 mb-1.5 font-bold">
+            Peluncuran Mosaic
+          </h3>
+          <p
+            class="text-[0.82rem] leading-relaxed m-0 text-justify text-slate-700"
+          >
+            Marc Andreessen memimpin tim yang menciptakan Mosaic, peramban web
+            (browser) berbasis antarmuka grafis (GUI) pertama yang populer,
+            membuat web dapat diakses oleh kalangan non-teknis.
+          </p>
+        </div>
+        <div
+          class="timeline-card fade-up border border-slate-200 bg-white px-5 py-4 text-left rounded-[10px] shadow-sm transition-all duration-600 ease-in-out relative hover:shadow-md"
+        >
+          <span
+            class="year inline-block font-bold text-[0.8rem] text-slate-900 bg-slate-100 py-0.5 px-1.5 rounded mb-1.5 border border-slate-200"
+            >1995</span
+          >
+          <h3 class="text-[1.05rem] text-slate-900 mb-1.5 font-bold">
+            Komersialisasi Web
+          </h3>
+          <p
+            class="text-[0.82rem] leading-relaxed m-0 text-justify text-slate-700"
+          >
+            Pembatasan komersial atas internet dicabut. Perusahaan seperti
+            Amazon dan eBay didirikan. Microsoft meluncurkan Internet Explorer.
+          </p>
+        </div>
+        <div
+          class="timeline-card fade-up border border-slate-200 bg-white px-5 py-4 text-left rounded-[10px] shadow-sm transition-all duration-600 ease-in-out relative hover:shadow-md"
+        >
+          <span
+            class="year inline-block font-bold text-[0.8rem] text-slate-900 bg-slate-100 py-0.5 px-1.5 rounded mb-1.5 border border-slate-200"
+            >1997 - 2001</span
+          >
+          <h3 class="text-[1.05rem] text-slate-900 mb-1.5 font-bold">
+            Era Dot-com Bubble
+          </h3>
+          <p
+            class="text-[0.82rem] leading-relaxed m-0 text-justify text-slate-700"
+          >
+            Terjadi lonjakan investasi massal pada perusahaan-perusahaan
+            internet baru, yang sebagian besar berakhir dengan kebangkrutan saat
+            gelembung pasar pecah.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="c"
+      data-theme="dark"
+      class="relative w-full flex flex-col justify-center items-center text-center px-[15px] md:px-5 pt-[90px] pb-[60px] md:h-screen md:pt-[60px] md:pb-10 md:snap-start md:snap-always md:overflow-hidden z-[1]"
+    >
+      <h1 class="hidden"></h1>
+      <div
+        class="timeline-title fade-down text-center mb-5 relative z-10 md:mt-auto"
+      >
+        <h2
+          class="text-[1.35rem] md:text-[1.75rem] text-slate-900 mb-1 font-bold"
+        >
+          Web 2.0 and the Mobile Revolution
+        </h2>
+        <p
+          class="era-year text-[0.9rem] font-bold tracking-[2px] m-0 text-slate-600 bg-white/80 inline-block py-[3px] px-3 rounded-full border border-slate-300"
+        >
+          2000s
+        </p>
+      </div>
+
+      <div
+        class="timeline-grid grid grid-cols-1 md:grid-cols-2 gap-[10px] md:gap-[15px] max-w-[800px] w-full relative z-10 md:mb-auto"
+      >
+        <div
+          class="timeline-card fade-up border border-slate-200 bg-white px-5 py-4 text-left rounded-[10px] shadow-sm transition-all duration-600 ease-in-out relative hover:shadow-md"
+        >
+          <span
+            class="year inline-block font-bold text-[0.8rem] text-slate-900 bg-slate-100 py-0.5 px-1.5 rounded mb-1.5 border border-slate-200"
+            >2004</span
+          >
+          <h3 class="text-[1.05rem] text-slate-900 mb-1.5 font-bold">
+            Dominasi Media Sosial
+          </h3>
+          <p
+            class="text-[0.82rem] leading-relaxed m-0 text-justify text-slate-700"
+          >
+            Facebook didirikan, menandai awal dari dominasi media sosial modern
+            yang mengubah cara manusia berinteraksi secara online.
+          </p>
+        </div>
+        <div
+          class="timeline-card fade-up border border-slate-200 bg-white px-5 py-4 text-left rounded-[10px] shadow-sm transition-all duration-600 ease-in-out relative hover:shadow-md"
+        >
+          <span
+            class="year inline-block font-bold text-[0.8rem] text-slate-900 bg-slate-100 py-0.5 px-1.5 rounded mb-1.5 border border-slate-200"
+            >2005</span
+          >
+          <h3 class="text-[1.05rem] text-slate-900 mb-1.5 font-bold">
+            Revolusi Video Online
+          </h3>
+          <p
+            class="text-[0.82rem] leading-relaxed m-0 text-justify text-slate-700"
+          >
+            YouTube diluncurkan, mengubah standar distribusi dan konsumsi video
+            di internet.
+          </p>
+        </div>
+        <div
+          class="timeline-card fade-up border border-slate-200 bg-white px-5 py-4 text-left rounded-[10px] shadow-sm transition-all duration-600 ease-in-out relative hover:shadow-md"
+        >
+          <span
+            class="year inline-block font-bold text-[0.8rem] text-slate-900 bg-slate-100 py-0.5 px-1.5 rounded mb-1.5 border border-slate-200"
+            >2006</span
+          >
+          <h3 class="text-[1.05rem] text-slate-900 mb-1.5 font-bold">
+            Komersialisasi Cloud Computing
+          </h3>
+          <p
+            class="text-[0.82rem] leading-relaxed m-0 text-justify text-slate-700"
+          >
+            Amazon Web Services (AWS) meluncurkan layanan komputasi awan (cloud
+            computing) komersial, memungkinkan perusahaan rintisan membangun
+            aplikasi tanpa perlu membeli server fisik.
+          </p>
+        </div>
+        <div
+          class="timeline-card fade-up border border-slate-200 bg-white px-5 py-4 text-left rounded-[10px] shadow-sm transition-all duration-600 ease-in-out relative hover:shadow-md"
+        >
+          <span
+            class="year inline-block font-bold text-[0.8rem] text-slate-900 bg-slate-100 py-0.5 px-1.5 rounded mb-1.5 border border-slate-200"
+            >2007</span
+          >
+          <h3 class="text-[1.05rem] text-slate-900 mb-1.5 font-bold">
+            Transisi Mobile Internet
+          </h3>
+          <p
+            class="text-[0.82rem] leading-relaxed m-0 text-justify text-slate-700"
+          >
+            Apple merilis iPhone. Peristiwa ini memicu transisi masif lalu
+            lintas internet dari komputer desktop ke perangkat seluler (mobile
+            internet).
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="d"
+      data-theme="dark"
+      class="relative w-full flex flex-col justify-center items-center text-center px-[15px] md:px-5 pt-[90px] pb-[60px] md:h-screen md:pt-[60px] md:pb-10 md:snap-start md:snap-always md:overflow-hidden z-[1]"
+    >
+      <h1 class="hidden"></h1>
+      <div
+        class="timeline-title fade-down text-center mb-5 relative z-10 md:mt-auto"
+      >
+        <h2
+          class="text-[1.35rem] md:text-[1.75rem] text-slate-50 mb-1 font-bold"
+        >
+          The Era of Data, Decentralization, and AI
+        </h2>
+        <p
+          class="era-year text-[0.9rem] font-bold tracking-[2px] m-0 text-slate-50 bg-slate-900/50 inline-block py-[3px] px-3 rounded-full border border-slate-500"
+        >
+          2010s - 2026
+        </p>
+      </div>
+
+      <div
+        class="timeline-grid grid grid-cols-1 md:grid-cols-2 gap-[10px] md:gap-[15px] max-w-[800px] w-full relative z-10 md:mb-auto"
+      >
+        <div
+          class="timeline-card fade-up border border-slate-200 bg-white px-5 py-4 text-left rounded-[10px] shadow-sm transition-all duration-600 ease-in-out relative hover:shadow-md"
+        >
+          <span
+            class="year inline-block font-bold text-[0.8rem] text-slate-900 bg-slate-100 py-0.5 px-1.5 rounded mb-1.5 border border-slate-200"
+            >2012</span
+          >
+          <h3 class="text-[1.05rem] text-slate-900 mb-1.5 font-bold">
+            Peluncuran Global IPv6
+          </h3>
+          <p
+            class="text-[0.82rem] leading-relaxed m-0 text-justify text-slate-700"
+          >
+            Peluncuran resmi IPv6 secara global untuk mengatasi masalah
+            penipisan alamat IPv4, memungkinkan miliaran perangkat baru (IoT)
+            terhubung ke internet.
+          </p>
+        </div>
+        <div
+          class="timeline-card fade-up border border-slate-200 bg-white px-5 py-4 text-left rounded-[10px] shadow-sm transition-all duration-600 ease-in-out relative hover:shadow-md"
+        >
+          <span
+            class="year inline-block font-bold text-[0.8rem] text-slate-900 bg-slate-100 py-0.5 px-1.5 rounded mb-1.5 border border-slate-200"
+            >2013 - 2018</span
+          >
+          <h3 class="text-[1.05rem] text-slate-900 mb-1.5 font-bold">
+            Kesadaran Privasi Data
+          </h3>
+          <p
+            class="text-[0.82rem] leading-relaxed m-0 text-justify text-slate-700"
+          >
+            Era kesadaran privasi dan keamanan. Edward Snowden membocorkan
+            pengawasan massal NSA (2013). Skandal Cambridge Analytica (2018)
+            memicu perdebatan global mengenai eksploitasi data pengguna oleh
+            platform web.
+          </p>
+        </div>
+        <div
+          class="timeline-card fade-up border border-slate-200 bg-white px-5 py-4 text-left rounded-[10px] shadow-sm transition-all duration-600 ease-in-out relative hover:shadow-md"
+        >
+          <span
+            class="year inline-block font-bold text-[0.8rem] text-slate-900 bg-slate-100 py-0.5 px-1.5 rounded mb-1.5 border border-slate-200"
+            >2020 - 2021</span
+          >
+          <h3 class="text-[1.05rem] text-slate-900 mb-1.5 font-bold">
+            Akselerasi Digital Pandemi
+          </h3>
+          <p
+            class="text-[0.82rem] leading-relaxed m-0 text-justify text-slate-700"
+          >
+            Pandemi COVID-19 memaksa percepatan transformasi digital. Pekerjaan
+            jarak jauh, layanan streaming, dan infrastruktur cloud mengalami
+            lonjakan adopsi tertinggi dalam sejarah.
+          </p>
+        </div>
+        <div
+          class="timeline-card fade-up border border-slate-200 bg-white px-5 py-4 text-left rounded-[10px] shadow-sm transition-all duration-600 ease-in-out relative hover:shadow-md"
+        >
+          <span
+            class="year inline-block font-bold text-[0.8rem] text-slate-900 bg-slate-100 py-0.5 px-1.5 rounded mb-1.5 border border-slate-200"
+            >2022 - 2026</span
+          >
+          <h3 class="text-[1.05rem] text-slate-900 mb-1.5 font-bold">
+            Era Generative AI
+          </h3>
+          <p
+            class="text-[0.82rem] leading-relaxed m-0 text-justify text-slate-700"
+          >
+            Akselerasi kecerdasan buatan generatif (seperti ChatGPT) yang
+            terintegrasi langsung dengan mesin pencari dan infrastruktur web,
+            mengubah cara manusia mencari informasi dan memproduksi konten
+            digital.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="sandbox-section"
+      data-theme="dark"
+      class="relative w-full py-[80px] md:h-screen md:py-0 flex flex-col justify-center items-center text-center px-[15px] md:px-5 md:snap-start md:snap-always overflow-hidden z-[1]"
+    >
+      <div
+        class="sandbox-container fade-up w-full max-w-[750px] h-[320px] md:h-[420px] bg-[#0b1120] border border-slate-700 rounded-xl relative overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.3)] mt-[15px]"
+        id="sandboxBox"
+      >
+        <div
+          class="bouncing-icon absolute w-[70px] h-[70px] bg-slate-800 border border-slate-600 rounded-full flex justify-center items-center shadow-md select-none will-change-transform"
+          data-icon="mobile"
+        >
+          <img
+            src="asset/icon/mobile.svg"
+            alt="Mobile"
+            class="w-9 h-9 object-contain filter invert brightness-0"
+          />
+        </div>
+        <div
+          class="bouncing-icon absolute w-[70px] h-[70px] bg-slate-800 border border-slate-600 rounded-full flex justify-center items-center shadow-md select-none will-change-transform"
+          data-icon="web"
+        >
+          <img
+            src="asset/icon/web.svg"
+            alt="Web"
+            class="w-9 h-9 object-contain filter invert brightness-0"
+          />
+        </div>
+        <div
+          class="bouncing-icon absolute w-[70px] h-[70px] bg-slate-800 border border-slate-600 rounded-full flex justify-center items-center shadow-md select-none will-change-transform"
+          data-icon="database"
+        >
+          <img
+            src="asset/icon/database.svg"
+            alt="Database"
+            class="w-9 h-9 object-contain filter invert brightness-0"
+          />
+        </div>
+        <div
+          class="bouncing-icon absolute w-[70px] h-[70px] bg-slate-800 border border-slate-600 rounded-full flex justify-center items-center shadow-md select-none will-change-transform"
+          data-icon="security"
+        >
+          <img
+            src="asset/icon/security.svg"
+            alt="Security"
+            class="w-9 h-9 object-contain filter invert brightness-0"
+          />
+        </div>
+        <div
+          class="bouncing-icon absolute w-[70px] h-[70px] bg-slate-800 border border-slate-600 rounded-full flex justify-center items-center shadow-md select-none will-change-transform"
+          data-icon="wifi"
+        >
+          <img
+            src="asset/icon/wifi.svg"
+            alt="WiFi"
+            class="w-9 h-9 object-contain filter invert brightness-0"
+          />
+        </div>
+        <div
+          class="bouncing-icon absolute w-[70px] h-[70px] bg-slate-800 border border-slate-600 rounded-full flex justify-center items-center shadow-md select-none will-change-transform"
+          data-icon="privacy"
+        >
+          <img
+            src="asset/icon/privacy.svg"
+            alt="Privacy"
+            class="w-9 h-9 object-contain filter invert brightness-0"
+          />
+        </div>
+      </div>
+    </section>
+
+    <footer
+      data-theme="dark"
+      class="relative w-full min-h-[60vh] md:h-screen pt-[120px] pb-[180px] md:py-0 bg-slate-900 flex flex-col justify-center items-center text-slate-100 font-semibold md:snap-start md:snap-always overflow-hidden"
+    >
+      <p
+        class="fade-up text-[1.2rem] tracking-[1px] z-10 md:-translate-y-[120px]"
+      >
+        &copy; 2026 Virtual Archive
+      </p>
+
+      <div
+        class="footer-ornaments absolute bottom-0 left-0 w-full flex gap-0 z-[1]"
+      >
+        <div class="ornament flex-1 flex justify-center items-end">
+          <img
+            src="asset/icon/mobile.svg"
+            alt="Mobile"
+            class="w-full h-auto object-contain block ornament-filter"
+          />
+        </div>
+        <div class="ornament flex-1 flex justify-center items-end">
+          <img
+            src="asset/icon/web.svg"
+            alt="Web"
+            class="w-full h-auto object-contain block ornament-filter"
+          />
+        </div>
+        <div class="ornament flex-1 flex justify-center items-end">
+          <img
+            src="asset/icon/database.svg"
+            alt="Database"
+            class="w-full h-auto object-contain block ornament-filter"
+          />
+        </div>
+        <div class="ornament flex-1 flex justify-center items-end">
+          <img
+            src="asset/icon/security.svg"
+            alt="Security"
+            class="w-full h-auto object-contain block ornament-filter"
+          />
+        </div>
+        <div class="ornament flex-1 flex justify-center items-end">
+          <img
+            src="asset/icon/wifi.svg"
+            alt="WiFi"
+            class="w-full h-auto object-contain block ornament-filter"
+          />
+        </div>
+        <div class="ornament flex-1 flex justify-center items-end">
+          <img
+            src="asset/icon/privacy.svg"
+            alt="Privacy"
+            class="w-full h-auto object-contain block ornament-filter"
+          />
+        </div>
+      </div>
+    </footer>
+
+    <script src="script/history.js"></script>
+  </body>
+</html>
