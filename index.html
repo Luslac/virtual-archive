@@ -1,891 +1,195 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Virtual Archive</title>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'IBM Plex Mono', monospace;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      scroll-snap-type: y mandatory; 
-      overflow-y: scroll;
-    }
-
-    #loading-screen {
-      position: fixed;
-      inset: 0;
-      background-color: #0f172a;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      color: #f8fafc;
-      transition: opacity 0.8s ease, visibility 0.8s ease;
-    }
-
-    .loader-content {
-      text-align: center;
-      max-width: 350px;
-      width: 100%;
-      padding: 0 20px;
-    }
-
-    .loader-title {
-      font-size: 1.25rem;
-      font-weight: 600;
-      letter-spacing: 3px;
-      margin-bottom: 8px;
-      color: #ffffff;
-    }
-
-    .loader-bar-container {
-      width: 100%;
-      height: 4px;
-      background-color: #1e293b;
-      border-radius: 2px;
-      overflow: hidden;
-    }
-
-    .loader-bar {
-      width: 0%;
-      height: 100%;
-      background-color: #38bdf8;
-      transition: width 0.05s linear;
-    }
-
-    .loader-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 12px;
-      font-size: 0.75rem;
-      color: #64748b;
-      letter-spacing: 1px;
-    }
-
-    .loader-hidden {
-      opacity: 0;
-      visibility: hidden;
-    }
-
-    nav {
-      position: sticky;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 70px;
-      background-color: transparent;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 50px;
-      z-index: 1000;
-      transition: color 0.4s ease;
-    }
-
-    .logo {
-      color: #0f172a; 
-      font-size: 1.5rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      transition: color 0.4s ease;
-    }
-
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 30px;
-    }
-
-    .nav-links {
-      display: flex;
-      list-style: none;
-      gap: 30px;
-    }
-
-    .nav-links a {
-      color: #0f172a; 
-      text-decoration: none;
-      font-weight: 600;
-      transition: color 0.3s;
-    }
-
-    .nav-links a:hover {
-      color: #38bdf8; 
-    }
-
-    .music-btn {
-      background: none;
-      border: 2px solid currentColor;
-      border-radius: 50%;
-      width: 36px;
-      height: 36px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      color: #0f172a;
-      transition: all 0.3s ease;
-      outline: none;
-    }
-
-    .music-btn:hover {
-      background-color: rgba(56, 189, 248, 0.2);
-      color: #38bdf8;
-    }
-
-    .music-btn svg {
-      width: 16px;
-      height: 16px;
-      fill: currentColor;
-    }
-
-    section {
-      position: relative; 
-      height: 100vh; 
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 0 20px;
-      scroll-snap-align: start; 
-      scroll-snap-stop: always; 
-      overflow: hidden; 
-      z-index: 1; 
-    }
-
-    section h1 {
-      position: absolute; 
-      top: 100px; 
-      left: 50px; 
-      font-size: 3.5rem;
-      font-weight: 700;
-      color: #0f172a; 
-    }
-
-    section p {
-      font-size: 1.25rem;
-      font-weight: 400; 
-      max-width: 600px;
-      color: #1e293b; 
-      margin-bottom: 30px;
-      line-height: 1.6;
-    }
-
-    #hero {
-      background-color: #f8fafc;
-      background-image: linear-gradient(rgba(15, 23, 42, 0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(15, 23, 42, 0.12) 1px, transparent 1px);
-      background-size: 30px 30px;
-    }
-
-    #hero h1 {
-      position: static; 
-      font-size: 4.5rem;
-      margin-bottom: 10px;
-    }
-    
-    #hero p {
-      font-size: 1.5rem;
-      max-width: 700px;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 12px 30px;
-      background-color: #0000ee; 
-      color: #ffffff;
-      text-decoration: none;
-      font-weight: bold;
-      border: 3px solid #0f172a;
-      box-shadow: 6px 6px 0px #0f172a; 
-      transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-      font-size: 1.2rem;
-      margin-top: 20px;
-    }
-
-    .btn:hover {
-      background-color: #0000aa;
-      transform: translate(3px, 3px) !important; 
-      box-shadow: 3px 3px 0px #0f172a;
-    }
-
-    #a { 
-      background-color: #d1d4d9; 
-      background-image: linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
-      background-size: 30px 30px;
-    }
-    #b { 
-      background-color: #aaafb6; 
-      background-image: linear-gradient(rgba(255, 255, 255, 0.10) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.10) 1px, transparent 1px);
-      background-size: 30px 30px;
-    }
-    #c { 
-      background-color: #838893; 
-      background-image: linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
-      background-size: 30px 30px;
-    }
-    #d { 
-      background-color: #5c6270; 
-      background-image: linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
-      background-size: 30px 30px;
-    }
-    
-    #sandbox-section { 
-      background-color: #334155;
-      background-image: linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px), 
-                        linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-      background-size: 30px 30px;
-    }
-
-    #d .timeline-title h2 { color: #f8fafc; }
-    #d .timeline-title p { color: #cbd5e1; }
-    #d .era-year { 
-      background: rgba(15, 23, 42, 0.5); 
-      color: #f8fafc; 
-      border-color: #64748b; 
-    }
-
-    .timeline-section {
-      justify-content: center; 
-      padding-top: 60px; 
-      padding-bottom: 40px;
-      align-items: center; 
-    }
-
-    .timeline-section h1 {
-      display: none;
-    }
-
-    .timeline-title {
-      text-align: center;
-      margin-bottom: 20px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .timeline-title h2 {
-      font-size: 1.75rem; 
-      color: #0f172a;
-      margin-bottom: 4px;
-    }
-
-    .era-year {
-      font-size: 0.9rem;
-      font-weight: bold;
-      letter-spacing: 2px;
-      margin: 0;
-      color: #475569;
-      background: rgba(255,255,255,0.8);
-      display: inline-block;
-      padding: 3px 12px;
-      border-radius: 20px;
-      border: 1px solid #cbd5e1;
-    }
-
-    .timeline-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-      max-width: 800px; 
-      width: 100%;
-      position: relative;
-      z-index: 2;
-    }
-
-    .timeline-card {
-      border: 1px solid #e2e8f0;
-      background-color: #ffffff;
-      padding: 16px 20px; 
-      text-align: left;
-      border-radius: 10px;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
-      transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.2s ease;
-      position: relative;
-    }
-
-    .timeline-card:hover {
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07);
-    }
-
-    .timeline-card .year {
-      display: inline-block; 
-      font-weight: bold;
-      font-size: 0.8rem;
-      color: #0f172a;
-      background: #f1f5f9;
-      padding: 2px 6px;
-      border-radius: 4px;
-      margin-bottom: 6px;
-      border: 1px solid #e2e8f0;
-    }
-
-    .timeline-card h3 {
-      font-size: 1.05rem;
-      color: #0f172a;
-      margin-bottom: 6px;
-    }
-
-    .timeline-card p {
-      font-size: 0.82rem; 
-      line-height: 1.45;
-      margin: 0;
-      max-width: 100%;
-      text-align: justify;
-      color: #334155;
-    }
-
-    .sandbox-container {
-      width: 100%;
-      max-width: 750px;
-      height: 420px;
-      background-color: #0b1120;
-      border: 1px solid #334155;
-      border-radius: 12px;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-      margin-top: 15px;
-    }
-
-    .bouncing-icon {
-      position: absolute;
-      width: 70px;
-      height: 70px;
-      background: #1e293b;
-      border: 1px solid #475569;
-      border-radius: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      user-select: none;
-      will-change: transform;
-    }
-
-    .bouncing-icon img {
-      width: 36px;
-      height: 36px;
-      object-fit: contain;
-      filter: brightness(0) invert(1);
-    }
-
-    footer {
-      height: 100vh;
-      width: 100%;
-      background: #0f172a; 
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      color: #f1f5f9; 
-      font-weight: 600;
-      scroll-snap-align: start;
-      scroll-snap-stop: always;
-      position: relative;
-      overflow: hidden;
-    }
-
-    footer p {
-      font-size: 1.2rem; 
-      letter-spacing: 1px;
-      z-index: 10;
-      transform: translateY(-120px);
-    }
-    
-    .footer-ornaments {
-      position: absolute;
-      bottom: 0; 
-      left: 0;
-      width: 100%;
-      display: flex;
-      gap: 0; 
-      z-index: 1;
-    }
-
-    .ornament {
-      flex: 1; 
-      display: flex;
-      justify-content: center;
-      align-items: flex-end; 
-    }
-
-    .ornament img {
-      width: 100%;
-      height: auto; 
-      object-fit: contain; 
-      display: block; 
-      filter: brightness(0) invert(96%) sepia(4%) saturate(301%) hue-rotate(185deg) brightness(103%) contrast(92%);
-    }
-
-    .fade-up {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-    .fade-down {
-      opacity: 0;
-      transform: translateY(-30px);
-      transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-    
-    .animate-show {
-      opacity: 1 !important;
-      transform: translate(0, 0) !important;
-    }
-
-    .timeline-card:nth-child(1) { transition-delay: 0.1s; }
-    .timeline-card:nth-child(2) { transition-delay: 0.2s; }
-    .timeline-card:nth-child(3) { transition-delay: 0.3s; }
-    .timeline-card:nth-child(4) { transition-delay: 0.4s; }
-
-
-    @media (max-width: 768px) {
-      nav { padding: 0 20px; }
-      .nav-links { gap: 15px; }
-
-      #hero h1 { font-size: 2.8rem; }
-      #hero p { font-size: 1.1rem; }
-
-      section { padding: 0 15px; }
-      section h1 {
-        font-size: 2.2rem;
-        left: 20px; 
-        top: 90px;
-      }
-      section p { font-size: 1rem; }
-
-      .timeline-title h2 { font-size: 1.35rem; }
-      
-      .timeline-grid {
-        grid-template-columns: 1fr;
-        gap: 10px;
-      }
-      
-      .timeline-section { 
-        padding-top: 70px; 
-        padding-bottom: 20px;
-      }
-
-      .sandbox-container {
-        width: 100%;
-        height: 320px;
-      }
-
-      footer p {
-        transform: translateY(-70px);
-      }
-    }
-  </style>
-</head>
-<body>
-
-  <audio id="bg-music" loop>
-    <source src="asset/music/music.mp3" type="audio/mpeg">
-    Browser Anda tidak mendukung elemen audio.
-  </audio>
-
-  <div id="loading-screen">
-    <div class="loader-content">
-      <div class="loader-title">VIRTUAL ARCHIVE</div>
-      <div class="loader-bar-container">
-        <div id="loader-bar" class="loader-bar"></div>
-      </div>
-      <div class="loader-footer">
-        <span>LOADING</span>
-        <span id="loader-percentage">0%</span>
-      </div>
-    </div>
-  </div>
-
-  <nav id="navbar">
-    <div class="logo">VA</div>
-    <div class="nav-right">
-      <ul class="nav-links">
-        <li><a href="#hero">Home</a></li>
-      </ul>
-      <button id="musicToggleBtn" class="music-btn" title="Putar/Hentikan Musik">
-        <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-        <svg id="pauseIcon" viewBox="0 0 24 24" style="display: none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-      </button>
-    </div>
-  </nav>
-
-  <section id="hero" data-theme="light">
-    <h1 class="fade-down">Virtual Archive</h1>
-    <p class="fade-up" style="transition-delay: 0.2s;">Menelusuri perjalanan dari protokol jaringan awal hingga era kecerdasan buatan modern.</p>
-    <a href="#a" class="btn fade-up" style="transition-delay: 0.4s;">Telusuri</a>
-  </section>
-
-  <section id="a" class="timeline-section" data-theme="light">
-    <div class="timeline-title fade-down">
-      <h2>Network Foundations and Early Protocols</h2>
-      <p class="era-year">1960s - 1980s</p>
-    </div>
-    
-    <div class="timeline-grid">
-      <div class="timeline-card fade-up">
-        <span class="year">1969</span>
-        <h3>Pembentukan ARPANET</h3>
-        <p>
-          ARPANET (Advanced Research Projects Agency Network) dibentuk oleh Departemen Pertahanan AS (DARPA). Pesan pertama dikirim dari UCLA ke Stanford Research Institute, meskipun sistem crash setelah mengetik dua huruf pertama ("LO").
-        </p>
-      </div>
-      <div class="timeline-card fade-up">
-        <span class="year">1971</span>
-        <h3>Penemuan Email Jaringan</h3>
-        <p>Ray Tomlinson menciptakan sistem email jaringan pertama dan menggunakan simbol @ untuk memisahkan nama pengguna dari nama komputer.</p>
-      </div>
-      <div class="timeline-card fade-up">
-        <span class="year">1973 - 1974</span>
-        <h3>Pengembangan TCP/IP</h3>
-        <p>Vinton Cerf dan Bob Kahn merancang Transmission Control Protocol / Internet Protocol (TCP/IP), standar yang memungkinkan berbagai jaringan komputer yang berbeda untuk saling berkomunikasi.</p>
-      </div>
-      <div class="timeline-card fade-up">
-        <span class="year">1983</span>
-        <h3>Standarisasi DNS</h3>
-        <p>ARPANET secara resmi mengadopsi protokol TCP/IP. Tanggal ini sering dianggap sebagai "hari lahir" internet modern. Pada tahun yang sama, Domain Name System (DNS) diperkenalkan.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="b" class="timeline-section" data-theme="light">
-    <div class="timeline-title fade-down">
-      <h2>The Birth of the Web and Commercialization</h2>
-      <p class="era-year">1990s</p>
-    </div>
-    
-    <div class="timeline-grid">
-      <div class="timeline-card fade-up">
-        <span class="year">1989 - 1991</span>
-        <h3>World Wide Web</h3>
-        <p>Tim Berners-Lee di CERN (Organisasi Eropa untuk Riset Nuklir) menemukan World Wide Web (WWW). Ia juga menciptakan bahasa markup HTML, protokol HTTP, dan URL.</p>
-      </div>
-      <div class="timeline-card fade-up">
-        <span class="year">1993</span>
-        <h3>Peluncuran Mosaic</h3>
-        <p>Marc Andreessen memimpin tim yang menciptakan Mosaic, peramban web (browser) berbasis antarmuka grafis (GUI) pertama yang populer, membuat web dapat diakses oleh kalangan non-teknis.</p>
-      </div>
-      <div class="timeline-card fade-up">
-        <span class="year">1995</span>
-        <h3>Komersialisasi Web</h3>
-        <p>Pembatasan komersial atas internet dicabut. Perusahaan seperti Amazon dan eBay didirikan. Microsoft meluncurkan Internet Explorer.</p>
-      </div>
-      <div class="timeline-card fade-up">
-        <span class="year">1997 - 2001</span>
-        <h3>Era Dot-com Bubble</h3>
-        <p>Terjadi lonjakan investasi massal pada perusahaan-perusahaan internet baru, yang sebagian besar berakhir dengan kebangkrutan saat gelembung pasar pecah.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="c" class="timeline-section" data-theme="dark">
-    <div class="timeline-title fade-down">
-      <h2>Web 2.0 and the Mobile Revolution</h2>
-      <p class="era-year">2000s</p>
-    </div>
-    
-    <div class="timeline-grid">
-      <div class="timeline-card fade-up">
-        <span class="year">2004</span>
-        <h3>Dominasi Media Sosial</h3>
-        <p>Facebook didirikan, menandai awal dari dominasi media sosial modern yang mengubah cara manusia berinteraksi secara online.</p>
-      </div>
-      <div class="timeline-card fade-up">
-        <span class="year">2005</span>
-        <h3>Revolusi Video Online</h3>
-        <p>YouTube diluncurkan, mengubah standar distribusi dan konsumsi video di internet.</p>
-      </div>
-      <div class="timeline-card fade-up">
-        <span class="year">2006</span>
-        <h3>Komersialisasi Cloud Computing</h3>
-        <p>Amazon Web Services (AWS) meluncurkan layanan komputasi awan (cloud computing) komersial, memungkinkan perusahaan rintisan membangun aplikasi tanpa perlu membeli server fisik.</p>
-      </div>
-      <div class="timeline-card fade-up">
-        <span class="year">2007</span>
-        <h3>Transisi Mobile Internet</h3>
-        <p>Apple merilis iPhone. Peristiwa ini memicu transisi masif lalu lintas internet dari komputer desktop ke perangkat seluler (mobile internet).</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="d" class="timeline-section" data-theme="dark">
-    <div class="timeline-title fade-down">
-      <h2>The Era of Data, Decentralization, and AI</h2>
-      <p class="era-year">2010s - 2026</p>
-    </div>
-    
-    <div class="timeline-grid">
-      <div class="timeline-card fade-up">
-        <span class="year">2012</span>
-        <h3>Peluncuran Global IPv6</h3>
-        <p>Peluncuran resmi IPv6 secara global untuk mengatasi masalah penipisan alamat IPv4, memungkinkan miliaran perangkat baru (IoT) terhubung ke internet.</p>
-      </div>
-      <div class="timeline-card fade-up">
-        <span class="year">2013 - 2018</span>
-        <h3>Kesadaran Privasi Data</h3>
-        <p>Era kesadaran privasi dan keamanan. Edward Snowden membocorkan pengawasan massal NSA (2013). Skandal Cambridge Analytica (2018) memicu perdebatan global mengenai eksploitasi data pengguna oleh platform web.</p>
-      </div>
-      <div class="timeline-card fade-up">
-        <span class="year">2020 - 2021</span>
-        <h3>Akselerasi Digital Pandemi</h3>
-        <p>Pandemi COVID-19 memaksa percepatan transformasi digital. Pekerjaan jarak jauh, layanan streaming, dan infrastruktur cloud mengalami lonjakan adopsi tertinggi dalam sejarah.</p>
-      </div>
-      <div class="timeline-card fade-up">
-        <span class="year">2022 - 2026</span>
-        <h3>Era Generative AI</h3>
-        <p>Akselerasi kecerdasan buatan generatif (seperti ChatGPT) yang terintegrasi langsung dengan mesin pencari dan infrastruktur web, mengubah cara manusia mencari informasi dan memproduksi konten digital.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="sandbox-section" data-theme="dark">
-    <div class="sandbox-container fade-up" id="sandboxBox">
-      <div class="bouncing-icon" data-icon="mobile"><img src="asset/icon/mobile.svg" alt="Mobile"></div>
-      <div class="bouncing-icon" data-icon="web"><img src="asset/icon/web.svg" alt="Web"></div>
-      <div class="bouncing-icon" data-icon="database"><img src="asset/icon/database.svg" alt="Database"></div>
-      <div class="bouncing-icon" data-icon="security"><img src="asset/icon/security.svg" alt="Security"></div>
-      <div class="bouncing-icon" data-icon="wifi"><img src="asset/icon/wifi.svg" alt="WiFi"></div>
-      <div class="bouncing-icon" data-icon="privacy"><img src="asset/icon/privacy.svg" alt="Privacy"></div>
-    </div>
-  </section>
-  
-  <footer data-theme="dark">
-    <p class="fade-up">&copy; 2026 Virtual Archive</p>
-    
-    <div class="footer-ornaments">
-      <div class="ornament"><img src="asset/icon/mobile.svg" alt="Mobile"></div>
-      <div class="ornament"><img src="asset/icon/web.svg" alt="Web"></div>
-      <div class="ornament"><img src="asset/icon/database.svg" alt="Database"></div>
-      <div class="ornament"><img src="asset/icon/security.svg" alt="Security"></div>
-      <div class="ornament"><img src="asset/icon/wifi.svg" alt="WiFi"></div>
-      <div class="ornament"><img src="asset/icon/privacy.svg" alt="Privacy"></div>
-    </div>
-  </footer>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const loadingScreen = document.getElementById("loading-screen");
-      const loaderBar = document.getElementById("loader-bar");
-      const loaderPercentage = document.getElementById("loader-percentage");
-
-      const totalDuration = 2000;
-      const intervalTime = 50;
-      let currentProgress = 0;
-      const increment = 100 / (totalDuration / intervalTime);
-
-      const loadingInterval = setInterval(() => {
-        currentProgress += increment;
-        if (currentProgress >= 100) {
-          currentProgress = 100;
-          clearInterval(loadingInterval);
-          
-          setTimeout(() => {
-            loadingScreen.classList.add("loader-hidden");
-          }, 200);
-        }
-
-        loaderBar.style.width = currentProgress + "%";
-        loaderPercentage.textContent = Math.floor(currentProgress) + "%";
-      }, intervalTime);
-
-      const bgMusic = document.getElementById('bg-music');
-      const musicToggleBtn = document.getElementById('musicToggleBtn');
-      const playIcon = document.getElementById('playIcon');
-      const pauseIcon = document.getElementById('pauseIcon');
-
-      bgMusic.volume = 1;
-
-      musicToggleBtn.addEventListener('click', () => {
-        if (bgMusic.paused) {
-          bgMusic.play().then(() => {
-            playIcon.style.display = 'none';
-            pauseIcon.style.display = 'block';
-          }).catch(err => {
-            console.log("Autoplay dicegah oleh browser:", err);
-          });
-        } else {
-          bgMusic.pause();
-          playIcon.style.display = 'block';
-          pauseIcon.style.display = 'none';
-        }
-      });
-
-      const nav = document.getElementById('navbar');
-      const logoEl = nav.querySelector('.logo');
-      const navLinkEl = nav.querySelector('.nav-links a');
-
-      const sections = document.querySelectorAll('section, footer');
-      
-      const navObserverOptions = {
-        root: null,
-        threshold: 0.5 
+<!doctype html>
+<html
+  lang="id"
+  class="scroll-smooth snap-none md:snap-y md:snap-mandatory overflow-x-hidden"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Virtual Archive</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              mono: ['"IBM Plex Mono"', "monospace"],
+            },
+          },
+        },
       };
+    </script>
+    <link rel="stylesheet" href="style/index.css" />
+  </head>
+  <body class="font-mono m-0 p-0 box-border text-slate-900">
+    <audio id="bg-music" loop>
+      <source src="asset/music/music.mp3" type="audio/mpeg" />
+      Browser Anda tidak mendukung elemen audio.
+    </audio>
 
-      const navObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const theme = entry.target.getAttribute('data-theme');
-            if (theme === 'dark') {
-              logoEl.style.color = '#f8fafc';
-              navLinkEl.style.color = '#f8fafc';
-              musicToggleBtn.style.color = '#f8fafc';
-            } else {
-              logoEl.style.color = '#0f172a';
-              navLinkEl.style.color = '#0f172a';
-              musicToggleBtn.style.color = '#0f172a';
-            }
-          }
-        });
-      }, navObserverOptions);
+    <div
+      id="loading-screen"
+      class="fixed inset-0 bg-slate-900 flex flex-col justify-center items-center z-[9999] text-slate-50 transition-all duration-800 ease-in-out"
+    >
+      <div class="loader-content text-center max-w-[350px] w-full px-5">
+        <div class="text-xl font-semibold tracking-[3px] mb-2 text-white">
+          VIRTUAL ARCHIVE
+        </div>
+        <div class="w-full h-1 bg-slate-800 rounded-sm overflow-hidden">
+          <div
+            id="loader-bar"
+            class="w-0 h-full bg-sky-400 transition-[width] duration-75 ease-linear"
+          ></div>
+        </div>
+        <div
+          class="flex justify-between items-center mt-3 text-xs text-slate-500 tracking-[1px]"
+        >
+          <span>LOADING</span>
+          <span id="loader-percentage">0%</span>
+        </div>
+      </div>
+    </div>
 
-      sections.forEach(sec => navObserver.observe(sec));
+    <nav
+      id="navbar"
+      class="fixed top-0 left-0 w-full h-[70px] bg-transparent flex justify-between items-center px-5 md:px-[50px] z-[1000] transition-colors duration-400 ease-in-out"
+    >
+      <div
+        class="logo text-slate-900 text-2xl font-bold tracking-[1px] transition-colors duration-400 ease-in-out"
+      >
+        VA
+      </div>
+      <div class="nav-right flex items-center gap-[15px] md:gap-[30px]">
+        <ul class="nav-links flex list-none gap-[15px] md:gap-[30px]">
+          <li>
+            <a
+              href="index.html"
+              class="text-slate-900 no-underline font-semibold transition-colors duration-300 hover:text-sky-400"
+              >Home</a
+            >
+          </li>
+          <li>
+            <a
+              href="history.html"
+              class="text-slate-900 no-underline font-semibold transition-colors duration-300 hover:text-sky-400"
+              >History</a
+            >
+          </li>
+          <li>
+            <a
+              href="halaman3.html"
+              class="text-slate-900 no-underline font-semibold transition-colors duration-300 hover:text-sky-400"
+              >Lainnya</a
+            >
+          </li>
+        </ul>
+        <button
+          id="musicToggleBtn"
+          class="music-btn bg-transparent border-2 border-current rounded-full w-9 h-9 flex justify-center items-center cursor-pointer text-slate-900 transition-all duration-300 outline-none hover:bg-sky-400/20 hover:text-sky-400"
+          title="Putar/Hentikan Musik"
+        >
+          <svg id="playIcon" viewBox="0 0 24 24" class="w-4 h-4 fill-current">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+          <svg
+            id="pauseIcon"
+            viewBox="0 0 24 24"
+            class="w-4 h-4 fill-current"
+            style="display: none"
+          >
+            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+          </svg>
+        </button>
+      </div>
+    </nav>
 
-      const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.15 
-      };
+    <section
+      id="hero"
+      data-theme="light"
+      class="relative w-full h-screen flex flex-col justify-center items-center text-center px-[15px] md:px-5 pt-[90px] pb-[60px] md:pt-[60px] md:pb-10 md:snap-start md:snap-always overflow-hidden z-[1]"
+    >
+      <h1
+        class="fade-down font-bold text-[2.8rem] md:text-[4.5rem] mb-2.5 text-slate-900"
+      >
+        Virtual Archive
+      </h1>
+      <p
+        class="fade-up text-[1.1rem] md:text-xl font-normal max-w-[700px] text-slate-800 mb-[30px] leading-relaxed"
+        style="transition-delay: 0.2s"
+      >
+        Menelusuri perjalanan dari protokol jaringan awal hingga era kecerdasan
+        buatan modern.
+      </p>
+      <a
+        href="history.html"
+        class="btn-custom fade-up inline-block px-[30px] py-[12px] bg-[#0000ee] text-white no-underline font-bold border-[3px] border-slate-900 transition-all duration-200 ease-in-out text-[1.2rem] mt-5 hover:bg-[#0000aa]"
+        style="transition-delay: 0.4s"
+        >Telusuri</a
+      >
+    </section>
 
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-show');
-          } else {
-            entry.target.classList.remove('animate-show');
-          }
-        });
-      }, observerOptions);
+    <footer
+      data-theme="dark"
+      class="relative w-full h-screen pt-[120px] pb-[180px] md:py-0 bg-slate-900 flex flex-col justify-center items-center text-slate-100 font-semibold md:snap-start md:snap-always overflow-hidden"
+    >
+      <p
+        class="fade-up text-[1.2rem] tracking-[1px] z-10 md:-translate-y-[120px]"
+      >
+        &copy; 2026 Virtual Archive
+      </p>
 
-      const animatedElements = document.querySelectorAll('.fade-up, .fade-down');
-      animatedElements.forEach(el => observer.observe(el));
+      <div
+        class="footer-ornaments absolute bottom-0 left-0 w-full flex gap-0 z-[1]"
+      >
+        <div class="ornament flex-1 flex justify-center items-end">
+          <img
+            src="asset/icon/mobile.svg"
+            alt="Mobile"
+            class="w-full h-auto object-contain block ornament-filter"
+          />
+        </div>
+        <div class="ornament flex-1 flex justify-center items-end">
+          <img
+            src="asset/icon/web.svg"
+            alt="Web"
+            class="w-full h-auto object-contain block ornament-filter"
+          />
+        </div>
+        <div class="ornament flex-1 flex justify-center items-end">
+          <img
+            src="asset/icon/database.svg"
+            alt="Database"
+            class="w-full h-auto object-contain block ornament-filter"
+          />
+        </div>
+        <div class="ornament flex-1 flex justify-center items-end">
+          <img
+            src="asset/icon/security.svg"
+            alt="Security"
+            class="w-full h-auto object-contain block ornament-filter"
+          />
+        </div>
+        <div class="ornament flex-1 flex justify-center items-end">
+          <img
+            src="asset/icon/wifi.svg"
+            alt="WiFi"
+            class="w-full h-auto object-contain block ornament-filter"
+          />
+        </div>
+        <div class="ornament flex-1 flex justify-center items-end">
+          <img
+            src="asset/icon/privacy.svg"
+            alt="Privacy"
+            class="w-full h-auto object-contain block ornament-filter"
+          />
+        </div>
+      </div>
+    </footer>
 
-      const container = document.getElementById('sandboxBox');
-      const iconElements = document.querySelectorAll('.bouncing-icon');
-      
-      let iconsData = [];
-      const iconSize = 70; 
-      const radius = iconSize / 2;
-
-      function initIcons() {
-        const cWidth = container.clientWidth;
-        const cHeight = container.clientHeight;
-
-        iconsData = [];
-        iconElements.forEach((el) => {
-          let x = Math.random() * (cWidth - iconSize - 40) + 20;
-          let y = Math.random() * (cHeight - iconSize - 40) + 20;
-          
-          let angle = Math.random() * Math.PI * 2;
-          let speed = 2.2 + Math.random() * 1.5;
-          let vx = Math.cos(angle) * speed;
-          let vy = Math.sin(angle) * speed;
-
-          iconsData.push({
-            element: el,
-            x: x,
-            y: y,
-            vx: vx,
-            vy: vy,
-            width: iconSize,
-            height: iconSize,
-            radius: radius
-          });
-        });
-      }
-
-      initIcons();
-
-      function updatePhysics() {
-        const cWidth = container.clientWidth;
-        const cHeight = container.clientHeight;
-
-        for (let i = 0; i < iconsData.length; i++) {
-          let item = iconsData[i];
-          item.x += item.vx;
-          item.y += item.vy;
-
-          if (item.x <= 0) {
-            item.x = 0;
-            item.vx *= -1;
-          } else if (item.x + item.width >= cWidth) {
-            item.x = cWidth - item.width;
-            item.vx *= -1;
-          }
-
-          if (item.y <= 0) {
-            item.y = 0;
-            item.vy *= -1;
-          } else if (item.y + item.height >= cHeight) {
-            item.y = cHeight - item.height;
-            item.vy *= -1;
-          }
-        }
-
-        for (let i = 0; i < iconsData.length; i++) {
-          for (let j = i + 1; j < iconsData.length; j++) {
-            let b1 = iconsData[i];
-            let b2 = iconsData[j];
-
-            let x1 = b1.x + b1.radius;
-            let y1 = b1.y + b1.radius;
-            let x2 = b2.x + b2.radius;
-            let y2 = b2.y + b2.radius;
-
-            let dx = x2 - x1;
-            let dy = y2 - y1;
-            let distance = Math.sqrt(dx * dx + dy * dy);
-            let minDist = b1.radius + b2.radius;
-
-            if (distance < minDist) {
-              let tempVx = b1.vx;
-              let tempVy = b1.vy;
-              b1.vx = b2.vx;
-              b1.vy = b2.vy;
-              b2.vx = tempVx;
-              b2.vy = tempVy;
-
-              let overlap = minDist - distance;
-              let nx = dx / distance;
-              let ny = dy / distance;
-
-              b1.x -= nx * overlap * 0.5;
-              b1.y -= ny * overlap * 0.5;
-              b2.x += nx * overlap * 0.5;
-              b2.y += ny * overlap * 0.5;
-            }
-          }
-        }
-
-        for (let i = 0; i < iconsData.length; i++) {
-          let item = iconsData[i];
-          item.element.style.transform = `translate(${item.x}px, ${item.y}px)`;
-        }
-
-        requestAnimationFrame(updatePhysics);
-      }
-
-      requestAnimationFrame(updatePhysics);
-
-      window.addEventListener('resize', () => {
-        const cWidth = container.clientWidth;
-        const cHeight = container.clientHeight;
-        iconsData.forEach(item => {
-          if (item.x + item.width > cWidth) item.x = cWidth - item.width;
-          if (item.y + item.height > cHeight) item.y = cHeight - item.height;
-        });
-      });
-    });
-  </script>
-</body>
+    <script src="script/index.js"></script>
+  </body>
 </html>
