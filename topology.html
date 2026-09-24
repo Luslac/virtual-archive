@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Archive - Topologi Jaringan</title>
+    <link rel="stylesheet" href="style/topology.css">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              mono: ['"IBM Plex Mono"', "monospace"],
+            },
+          },
+        },
+      };
+    </script>
+</head>
+
+
+<body>
+  <audio id="bg-music" loop>
+      <source src="asset/music/music.mp3" type="audio/mpeg" />
+      Browser Anda tidak mendukung elemen audio.
+    </audio>
+
+  <nav
+      id="navbar"
+      class="fixed top-0 left-0 w-full h-[70px] bg-transparent flex justify-between items-center px-5 md:px-[50px] z-[1000] transition-colors duration-400 ease-in-out"
+    >
+      <div
+        class="logo text-white text-2xl font-bold tracking-[1px] transition-colors duration-400 ease-in-out"
+      >
+        VA
+      </div>
+      <div class="nav-right flex items-center gap-[15px] md:gap-[30px]">
+        <ul class="nav-links flex list-none gap-[15px] md:gap-[30px]">
+          <li>
+            <a
+              href="index.html"
+              class="text-white no-underline font-semibold transition-colors duration-300 hover:text-sky-400"
+              >Home</a
+            >
+          </li>
+          <li>
+            <a
+              href="history.html"
+              class="text-white no-underline font-semibold transition-colors duration-300 hover:text-sky-400"
+              >History</a
+            >
+          </li>
+          <li>
+            <a
+              href="topology.html"
+              class="text-white no-underline font-semibold transition-colors duration-300 hover:text-sky-400"
+              >Lainnya</a
+            >
+          </li>
+        </ul>
+        <button
+          id="musicToggleBtn"
+          class="music-btn bg-transparent border-2 border-current rounded-full w-9 h-9 flex justify-center items-center cursor-pointer text-white transition-all duration-300 outline-none hover:bg-sky-400/20 hover:text-sky-400"
+          title="Putar/Hentikan Musik"
+        >
+          <svg id="playIcon" viewBox="0 0 24 24" class="w-4 h-4 fill-current">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+          <svg
+            id="pauseIcon"
+            viewBox="0 0 24 24"
+            class="w-4 h-4 fill-current"
+            style="display: none"
+          >
+            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+
+    <main class="main-content">
+        <header class="header-section">
+            <h1 class="page-title">Network Topology</h1>
+            <p class="page-subtitle">Alur transmisi data dari Cloud WAN hingga Endpoint Lokal</p>
+        </header>
+
+        <div class="topology-container">
+
+            <div class="node-card">
+                <div class="node-icon-box">
+                    <img src="asset/icon/cloud-backup-svgrepo-com.svg" alt="Cloud Icon" class="node-icon">
+                </div>
+                <div>
+                    <div class="node-title">Cloud / ISP Gateway</div>
+                    <div class="node-sub">WAN Uplink (Public IP)</div>
+                </div>
+            </div>
+
+            <div class="connector-line"></div>
+
+            <div class="node-card">
+                <div class="node-icon-box">
+                    <img src="asset/icon/router-svgrepo-com (1).svg" alt="Router Icon" class="node-icon">
+                </div>
+                <div>
+                    <div class="node-title">Edge Router</div>
+                    <div class="node-sub">NAT / Firewall / DHCP</div>
+                </div>
+            </div>
+
+            <div class="connector-line"></div>
+
+            <div class="grid-tier">
+                <div class="node-card">
+                    <div class="node-icon-box">
+                        <img src="asset/icon/switch.png" alt="Switch Icon" class="node-icon">
+                    </div>
+                    <div>
+                        <div class="node-title">Core Switch</div>
+                        <div class="node-sub">VLAN 10 &amp; 20 (Trunk)</div>
+                    </div>
+                </div>
+
+                <div class="node-card">
+                    <div class="node-icon-box">
+                        <img src="asset/icon/access-point-svgrepo-com.svg" alt="Access Point Icon" class="node-icon">
+                    </div>
+                    <div>
+                        <div class="node-title">Access Point</div>
+                        <div class="node-sub">WLAN SSID Zone</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector-line"></div>
+
+            <div class="grid-tier">
+                <div class="node-card">
+                    <div class="node-icon-box">
+                        <img src="asset/icon/pc-svgrepo-com.svg" alt="PC Icon" class="node-icon">
+                    </div>
+                    <div>
+                        <div class="node-title">PC Workstation</div>
+                        <div class="node-sub">192.168.10.10</div>
+                    </div>
+                </div>
+
+                <div class="node-card">
+                    <div class="node-icon-box">
+                        <img src="asset/icon/server-svgrepo-com.svg" alt="Server Icon" class="node-icon">
+                    </div>
+                    <div>
+                        <div class="node-title">Local Server</div>
+                        <div class="node-sub">192.168.10.2</div>
+                    </div>
+                </div>
+
+                <div class="node-card">
+                    <div class="node-icon-box">
+                        <img src="asset/icon/laptop-svgrepo-com (1).svg" alt="Laptop Icon" class="node-icon">
+                    </div>
+                    <div>
+                        <div class="node-title">Wireless Laptop</div>
+                        <div class="node-sub">DHCP Client</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <p>Virtual Archive &copy; 2026 &bull; Network Topology</p>
+    </footer>
+</body>
+<script src="script/topology.js"></script>
+</html>
